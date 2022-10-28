@@ -1,0 +1,31 @@
+---
+apiVersion: policy/v1beta1
+kind: PodDisruptionBudget
+metadata:
+  name: traefik-public
+  namespace: traefik
+  labels:
+    app.kubernetes.io/name: traefik-public
+    app.kubernetes.io/instance: traefik-public
+spec:
+  minAvailable: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: traefik-public
+      app.kubernetes.io/instance: traefik-public
+
+---
+apiVersion: policy/v1beta1
+kind: PodDisruptionBudget
+metadata:
+  name: traefik-private
+  namespace: traefik
+  labels:
+    app.kubernetes.io/name: traefik-private
+    app.kubernetes.io/instance: traefik-private
+spec:
+  minAvailable: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: traefik-private
+      app.kubernetes.io/instance: traefik-private

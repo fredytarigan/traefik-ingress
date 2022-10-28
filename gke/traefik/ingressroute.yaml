@@ -1,0 +1,24 @@
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: treafik-traefik-dashboard
+  namespace: traefik
+  annotations:
+    kubernetes.io/ingress.class: traefik-private
+  labels:
+    app.kubernetes.io/name: traefik
+    app.kubernetes.io/instance: treafik
+spec:
+  entryPoints:
+    - traefik
+  routes:
+  - match: PathPrefix(`/dashboard`) || PathPrefix(`/api`)
+    kind: Rule
+    services:
+    - name: traefik-private-api
+      kind: Service
+      namespace: traefik
+      port: 80
+      scheme: http
+      strategy: RoundRobin

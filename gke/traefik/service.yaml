@@ -1,0 +1,91 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: traefik-public
+  namespace: traefik
+  labels:
+    app.kubernetes.io/name: traefik-public
+    app.kubernetes.io/instance: traefik-public
+  annotations:
+    cloud.google.com/neg: '{"ingress": true}'
+spec:
+  # type: NodePort
+  selector:
+    app.kubernetes.io/name: traefik-public
+    app.kubernetes.io/instance: traefik-public
+  ports:
+  - port: 80
+    name: web
+    targetPort: "web"
+    protocol: "TCP"
+    # nodePort: 31011
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: traefik-private
+  namespace: traefik
+  labels:
+    app.kubernetes.io/name: traefik-private
+    app.kubernetes.io/instance: traefik-private
+  annotations:
+    cloud.google.com/neg: '{"ingress": true}'
+spec:
+  # type: NodePort
+  selector:
+    app.kubernetes.io/name: traefik-private
+    app.kubernetes.io/instance: traefik-private
+  ports:
+  - port: 80
+    name: web
+    targetPort: "web"
+    protocol: "TCP"
+    # nodePort: 31012
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: traefik-public-api
+  namespace: traefik
+  labels:
+    app.kubernetes.io/name: traefik-public-api
+    app.kubernetes.io/instance: traefik-public-api
+  annotations:
+    cloud.google.com/neg: '{"ingress": true}'
+spec:
+  # type: NodePort
+  selector:
+    app.kubernetes.io/name: traefik-public
+    app.kubernetes.io/instance: traefik-public
+  ports:
+  - port: 80
+    name: traefik
+    targetPort: "traefik"
+    protocol: "TCP"
+    # nodePort: 31021
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: traefik-private-api
+  namespace: traefik
+  labels:
+    app.kubernetes.io/name: traefik-private-api
+    app.kubernetes.io/instance: traefik-private-api
+  annotations:
+    cloud.google.com/neg: '{"ingress": true}'
+spec:
+  # type: NodePort
+  selector:
+    app.kubernetes.io/name: traefik-private
+    app.kubernetes.io/instance: traefik-private
+  ports:
+  - port: 80
+    name: traefik
+    targetPort: "traefik"
+    protocol: "TCP"
+    # nodePort: 31022
